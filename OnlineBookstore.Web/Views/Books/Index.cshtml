@@ -1,0 +1,45 @@
+﻿@model IEnumerable<OnlineBookstore.Services.DTOs.BookDTO>
+
+<h1>Book List</h1>
+
+@if (Model != null && Model.Any())
+{
+    <ul>
+        @foreach (var book in Model)
+        {
+            <li>@book.Title - @book.Author</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No books available.</p>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.Price.ToString("C")</td>
+                <td>@book.Category</td>
+                <td>
+                    <a asp-action="Detail" asp-route-id="@book.Id" class="btn btn-info btn-sm">Details</a>
+                    <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

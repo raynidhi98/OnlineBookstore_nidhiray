@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Your Orders";
+}
+
+<h2>Your Orders</h2>
+
+@if (Model?.Any() == true)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Total Amount</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>@order.OrderDate.ToString("MMMM dd, yyyy")</td>
+                    <td>
+                        @switch (order.Status)
+                        {
+                            case "Pending":
+                                <span class="badge bg-warning">Pending</span>
+                                break;
+                            case "Shipped":
+                                <span class="badge bg-info">Shipped</span>
+                                break;
+                            case "Delivered":
+                                <span class="badge bg-success">Delivered</span>
+                                break;
+                            case "Cancelled":
+                                <span class="badge bg-danger">Cancelled</span>
+                                break;
+                            default:
+                                <span class="badge bg-secondary">Unknown</span>
+                                break;
+                        }
+                    </td>
+                    <td>@order.TotalAmount.ToString("C")</td>
+                    <td>
+                        <a class="btn btn-info btn-sm" href="@Url.Action("Details", "Order", new { id = order.OrderId })">View Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>You have no orders yet.</p>
+}

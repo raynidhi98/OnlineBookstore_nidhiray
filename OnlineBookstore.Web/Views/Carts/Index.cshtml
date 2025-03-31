@@ -1,0 +1,39 @@
+﻿@model OnlineBookstore.Services.DTOs.CartDTO
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h2>Your Shopping Cart</h2>
+
+@if (Model.Items.Count == 0)
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Quantity</td>
+                    <td>$@item.Price</td>
+                    <td>
+                        <a class="btn btn-danger" asp-controller="Cart" asp-action="RemoveFromCart" asp-route-bookId="@item.BookId">Remove</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-success" asp-controller="Order" asp-action="PlaceOrder">Checkout</a>
+}

@@ -1,0 +1,31 @@
+﻿@model OnlineBookstore.Services.DTOs.BookDTO
+
+@{
+    ViewData["Title"] = "Edit Book";
+}
+
+<h2>Edit Book</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label asp-for="Author" class="control-label"></label>
+        <input asp-for="Author" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" type="number" step="0.01" required />
+    </div>
+    <div class="form-group">
+        <label asp-for="Category" class="control-label"></label>
+        <input asp-for="Category" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-warning">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

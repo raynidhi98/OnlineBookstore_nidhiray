@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to Online Bookstore</h1>
+    <p class="lead">Your favorite place to buy books online at the best prices.</p>
+    <hr class="my-4">
+    <p>Browse through thousands of books from various genres.</p>
+    <a class="btn btn-primary btn-lg" href="@Url.Action("Browse", "Book")" role="button">Browse Books</a>
+</div>
+
+<div class="row text-center">
+    <div class="col-md-4">
+        <h2>Best Sellers</h2>
+        <p>Check out our best-selling books of the month.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>New Arrivals</h2>
+        <p>Browse the latest books added to our collection.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Offers</h2>
+        <p>Don't miss out on great offers and discounts.</p>
+    </div>
+</div>

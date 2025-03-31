@@ -1,0 +1,20 @@
+﻿@model OnlineBookstore.Services.DTOs.UserDTO
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2 class="text-center">User Profile</h2>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text"><strong>Email:</strong> @Model.Email</p>
+            @* <p class="card-text"><strong>Phone:</strong> @Model.PhoneNumber</p>
+            <p class="card-text"><strong>Address:</strong> @Model.Address</p> *@
+
+            <a asp-controller="Account" asp-action="EditProfile" class="btn btn-primary">Edit Profile</a>
+            <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-secondary">Change Password</a>
+        </div>
+    </div>
+</div>
