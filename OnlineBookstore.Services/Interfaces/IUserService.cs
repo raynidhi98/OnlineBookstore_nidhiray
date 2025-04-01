@@ -9,7 +9,7 @@ namespace OnlineBookstore.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserDTO> GetUserByIdAsync(int userId);
+        Task<UserDTO> GetUserByCredentialsAsync(string username, string password);
         Task<UserDTO> AuthenticateUserAsync(string username, string password);
         Task<bool> RegisterUserAsync(UserDTO userDto, string password);
     }

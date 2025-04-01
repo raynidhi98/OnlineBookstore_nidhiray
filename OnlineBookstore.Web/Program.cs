@@ -6,7 +6,6 @@ using OnlineBookstore.Services.Interfaces;
 using OnlineBookstore.Services.Repositories;
 using System.Text;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -36,10 +35,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization(); // Enable Authorization
+// Add Authorization for MVC controllers
+builder.Services.AddAuthorization(); // Authorization setup for MVC controllers
+
+// Enable Session Support
+builder.Services.AddDistributedMemoryCache(); // Required for session
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout (optional)
+    options.Cookie.HttpOnly = true; // Optional, for security
+    options.Cookie.IsEssential = true; // Optional, to allow session cookie on all browsers
+});
+
 builder.Services.AddDbContext<BookstoreContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 
 var app = builder.Build();
 
@@ -54,7 +63,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthentication(); // Enable Authentication
+// Ensure session and authentication middlewares are in place
+app.UseSession();  // Make sure sessions are enabled
+app.UseAuthentication(); // Enable Authentication (JWT)
 app.UseAuthorization(); // Enable Authorization
 
 app.MapControllerRoute(

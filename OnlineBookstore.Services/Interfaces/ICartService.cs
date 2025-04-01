@@ -13,7 +13,5 @@ namespace OnlineBookstore.Services.Interfaces
         Task<bool> AddToCartAsync(int userId, CartItemDTO cartItem);
         Task<bool> RemoveFromCartAsync(int userId, int bookId);
         Task<bool> ClearCartAsync(int userId);
-
-
     }
 }

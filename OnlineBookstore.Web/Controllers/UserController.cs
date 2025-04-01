@@ -25,9 +25,9 @@ namespace OnlineBookstore.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(int id)
+        public async Task<IActionResult> GetUserByCredentials(string username, string password)
         {
-            var user = await _userService.GetUserByIdAsync(id);
+            var user = await _userService.GetUserByCredentialsAsync(username, password);
             if (user == null) return NotFound();
             return Ok(user);
         }
