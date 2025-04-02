@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Web.Controllers
 {
-    //[Route("books")] 
+    [Route("api/books")]
+    [ApiController]
     public class BooksController : Controller 
     {
         private readonly IBookService _bookService;
