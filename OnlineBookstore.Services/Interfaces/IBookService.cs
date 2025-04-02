@@ -17,3 +17,4 @@ namespace OnlineBookstore.Services.Interfaces
         Task<bool> DeleteBookAsync(int id);
     }
 }
+

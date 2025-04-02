@@ -44,7 +44,6 @@ namespace OnlineBookstore.Web.Controllers
             return Ok(book);
         }
 
-        // ✅ Add a new book (Only for authenticated users)
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> AddBook([FromBody] BookDTO bookDto)
@@ -57,7 +56,6 @@ namespace OnlineBookstore.Web.Controllers
             return Ok("Book added successfully.");
         }
 
-        // ✅ Update an existing book
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> UpdateBook(int id, [FromBody] BookDTO bookDto)
@@ -70,7 +68,6 @@ namespace OnlineBookstore.Web.Controllers
             return Ok("Book updated successfully.");
         }
 
-        // ✅ Delete a book
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> DeleteBook(int id)
