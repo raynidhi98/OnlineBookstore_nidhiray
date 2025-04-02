@@ -9,9 +9,9 @@
 <div>
     <h4><strong>Author:</strong> @Model.Author</h4>
     <h4><strong>Price:</strong> @Model.Price.ToString("C")</h4>
-    <h4><strong>Category:</strong> @Model.Category</h4>
+    <h4><strong>Category:</strong> @Model.ISBN</h4>
+    <h4><strong>Category:</strong> @Model.StockQuantity</h4>
 </div>
-
 <p>
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
