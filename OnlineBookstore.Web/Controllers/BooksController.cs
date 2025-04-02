@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Web.Controllers
 {
-    [Route("books")] // Adjust the route as per your needs
-    public class BookController : Controller  // Use Controller instead of ControllerBase
+    //[Route("books")] 
+    public class BooksController : Controller 
     {
         private readonly IBookService _bookService;
 
-        public BookController(IBookService bookService)
+        public BooksController(IBookService bookService)
         {
             _bookService = bookService;
         }
@@ -23,6 +23,16 @@ namespace OnlineBookstore.Web.Controllers
             var books = await _bookService.GetAllBooksAsync();
             return View(books);  // Returns a view with the list of books
         }
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Details(int id)
+        //{
+        //    var book = await _bookService.GetBookByIdAsync(id);
+        //    if (book == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(book);
+        //}
 
         [HttpPost]
         [Authorize] // Only authenticated users can add books

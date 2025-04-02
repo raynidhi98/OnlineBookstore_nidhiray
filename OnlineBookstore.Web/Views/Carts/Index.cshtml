@@ -29,11 +29,14 @@ else
                     <td>@item.Quantity</td>
                     <td>$@item.Price</td>
                     <td>
-                        <a class="btn btn-danger" asp-controller="Cart" asp-action="RemoveFromCart" asp-route-bookId="@item.BookId">Remove</a>
+                        <form asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="bookId" value="@item.BookId" />
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <a class="btn btn-success" asp-controller="Order" asp-action="PlaceOrder">Checkout</a>
+    <a class="btn btn-success" asp-controller="Orders" asp-action="PlaceOrder">Checkout</a>
 }

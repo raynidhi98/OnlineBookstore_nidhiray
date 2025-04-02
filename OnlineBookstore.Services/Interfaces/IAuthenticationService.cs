@@ -9,6 +9,7 @@ namespace OnlineBookstore.Services.Interfaces
 {
     public interface IAuthenticationService
     {
+        Task<UserDTO> AuthenticateAsync(string username, string password);
         Task<string> GenerateJwtTokenAsync(UserDTO user);
         Task<bool> ValidateUserCredentialsAsync(string username, string password);
     }

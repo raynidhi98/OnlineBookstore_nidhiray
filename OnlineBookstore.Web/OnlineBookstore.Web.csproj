@@ -27,4 +27,8 @@
     <ProjectReference Include="..\OnlineBookstore.Services\OnlineBookstore.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SP\" />
+  </ItemGroup>
+
 </Project>

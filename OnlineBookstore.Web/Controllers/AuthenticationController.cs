@@ -16,6 +16,7 @@ namespace OnlineBookstore.Web.Controllers
             _authService = authService;
         }
 
+        // API endpoint to login and generate JWT token
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserDTO userDto)
         {

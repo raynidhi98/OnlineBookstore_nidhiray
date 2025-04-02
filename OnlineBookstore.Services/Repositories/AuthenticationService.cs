@@ -7,17 +7,32 @@ namespace OnlineBookstore.Services.Repositories
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public AuthenticationService()
+        private readonly IUserService _userRepository;
+
+        public async Task<UserDTO> AuthenticateAsync(string username, string password)
         {
-            // Constructor logic if needed
+            // Assume we check the credentials from the database
+            var user = await _userRepository.GetUserByCredentialsAsync(username, password);
+
+            if (user != null)
+            {
+                // Return the user info (including user Id)
+                return new UserDTO { Id = user.Id, Name = user.Name };
+            }
+            return null;
         }
 
-        public async Task<string> GenerateJwtTokenAsync(UserDTO user)
+        //public AuthenticationService()
+        //{
+        //    // Constructor logic if needed
+        //}
+
+        public Task<string> GenerateJwtTokenAsync(UserDTO user)
         {
             throw new NotImplementedException(); // TODO: Implement JWT token generation logic
         }
 
-        public async Task<bool> ValidateUserCredentialsAsync(string username, string password)
+        public Task<bool> ValidateUserCredentialsAsync(string username, string password)
         {
             throw new NotImplementedException(); // TODO: Implement user validation logic
         }
