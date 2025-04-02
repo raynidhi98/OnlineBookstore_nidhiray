@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OnlineBookstore.Data;
@@ -49,6 +50,13 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddDbContext<BookstoreContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ConfigureHttpsDefaults(httpsOptions =>
+    {
+        httpsOptions.ClientCertificateMode = ClientCertificateMode.NoCertificate;
+    });
+});
 
 var app = builder.Build();
 

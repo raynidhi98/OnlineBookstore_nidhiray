@@ -1,11 +1,19 @@
-﻿namespace OnlineBookstore.Data.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OnlineBookstore.Data.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        public int UserId { get; set; }
+
+        [Required(ErrorMessage = "Username is required.")]
         public string Username { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }  // Hashed Password
-        public string Role { get; set; }  // Admin or Customer
+
+        [Required(ErrorMessage = "Password is required.")]
+        public string PasswordHash { get; set; }
+
+        public string? FullName { get; set; }  // Optional for login
+        public string? Email { get; set; }  // Optional for login
+        public string? Role { get; set; }
     }
 }

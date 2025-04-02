@@ -5,6 +5,7 @@ using OnlineBookstore.Services.DTOs;
 using OnlineBookstore.Services.Interfaces;
 using OnlineBookstore.Data;
 using Microsoft.EntityFrameworkCore;
+using OnlineBookstore.Data.Models;
 
 namespace OnlineBookstore.Services.Repositories
 {
@@ -13,7 +14,7 @@ namespace OnlineBookstore.Services.Repositories
         private readonly BookstoreContext _context;
         public UserService(BookstoreContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
         public async Task<UserDTO> GetUserByCredentialsAsync(string username, string password)
         {
@@ -25,8 +26,8 @@ namespace OnlineBookstore.Services.Repositories
             {
                 return new UserDTO
                 {
-                    Id = user.Id,
-                    Name = user.Username,
+                    UserId = user.UserId,
+                    Username = user.Username,
                 };
             }
 

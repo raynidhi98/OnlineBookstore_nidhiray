@@ -3,48 +3,76 @@ using OnlineBookstore.Services.DTOs;
 using OnlineBookstore.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using OnlineBookstore.Data;
+using OnlineBookstore.Data.Models;
+
 
 namespace OnlineBookstore.Web.Controllers
 {
     public class AccountsController : Controller
     {
         private readonly IAuthenticationService _authService;
+        private readonly BookstoreContext _dbContext; // ✅ Inject DbContext
 
-        public AccountsController(IAuthenticationService authService)
+        public AccountsController(IAuthenticationService authService, BookstoreContext dbContext)
         {
             _authService = authService;
+            _dbContext = dbContext;
         }
 
         public IActionResult Login()
         {
-            return View(); // Return the login page
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserDTO userDto)
+        public async Task<IActionResult> Login(UserDTO model)
         {
-            // Authenticate user (using AuthenticationService)
-            var user = await _authService.AuthenticateAsync(userDto.Name, userDto.Password);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _authService.AuthenticateAsync(model.Username, model.PasswordHash);
 
             if (user != null)
             {
-                // Store UserId in the session after successful login
-                HttpContext.Session.SetInt32("UserId", user.Id);
-
-                // Redirect to home page or any other protected page
+                HttpContext.Session.SetString("Username", user.Username);
+                HttpContext.Session.SetInt32("UserId", user.UserId);
                 return RedirectToAction("Index", "Home");
             }
-            else
-            {
-                // If authentication fails, add an error message
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return View(userDto); // Return to the login page with error
-            }
+
+            ModelState.AddModelError(string.Empty, "Invalid login credentials.");
+            return View(model);
         }
 
         public IActionResult Register()
         {
             return View(); // Show registration page
         }
+        [HttpPost]
+        public async Task<IActionResult> Register(UserDTO model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var newUser = new User
+            {
+                Username = model.Username,
+                Email = model.Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.PasswordHash),
+                FullName = model.FullName,
+                Role = model.Role
+            };
+
+            _dbContext.Users.Add(newUser);
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToAction("Login", "Accounts");
+        }
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿@model OnlineBookstore.Services.DTOs.UserDTO
-
 @{
     ViewData["Title"] = "Register";
 }
@@ -7,9 +6,10 @@
 <h2>Register</h2>
 
 <form asp-action="Register" method="post">
+    @* @Html.AntiForgeryToken() *@
     <div class="mb-3">
-        <label>Name</label>
-        <input asp-for="Name" class="form-control" required />
+        <label>Username</label>
+        <input asp-for="Username" class="form-control" required />
     </div>
     <div class="mb-3">
         <label>Email</label>
@@ -17,7 +17,15 @@
     </div>
     <div class="mb-3">
         <label>Password</label>
-        <input asp-for="Password" type="password" class="form-control" required />
+        <input asp-for="PasswordHash" type="password" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Full Name</label>
+        <input asp-for="FullName" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Role </label>
+        <input asp-for="Role" class="form-control" required />
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
