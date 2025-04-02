@@ -35,13 +35,51 @@ namespace OnlineBookstore.Web.Controllers
         //    return View(book);
         //}
 
+        // ✅ Get a single book by ID
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBookById(int id)
+        {
+            var book = await _bookService.GetBookByIdAsync(id);
+            if (book == null) return NotFound("Book not found.");
+            return Ok(book);
+        }
+
+        // ✅ Add a new book (Only for authenticated users)
         [HttpPost]
-        [Authorize] // Only authenticated users can add books
+        [Authorize]
         public async Task<IActionResult> AddBook([FromBody] BookDTO bookDto)
         {
+            if (bookDto == null) return BadRequest("Invalid book data.");
+
             var result = await _bookService.AddBookAsync(bookDto);
             if (!result) return BadRequest("Failed to add book.");
+
             return Ok("Book added successfully.");
         }
+
+        // ✅ Update an existing book
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] BookDTO bookDto)
+        {
+            if (bookDto == null || id != bookDto.Id) return BadRequest("Invalid book data.");
+
+            var result = await _bookService.UpdateBookAsync(bookDto);
+            if (!result) return NotFound("Book not found.");
+
+            return Ok("Book updated successfully.");
+        }
+
+        // ✅ Delete a book
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            var result = await _bookService.DeleteBookAsync(id);
+            if (!result) return NotFound("Book not found.");
+
+            return Ok("Book deleted successfully.");
+        }
     }
+
 }

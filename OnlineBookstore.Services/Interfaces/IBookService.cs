@@ -12,8 +12,8 @@ namespace OnlineBookstore.Services.Interfaces
     {
         Task<IEnumerable<BookDTO>> GetAllBooksAsync();
         Task<BookDTO> GetBookByIdAsync(int bookId);
-        Task<bool> AddBookAsync(BookDTO bookDto);
-        Task<bool> UpdateBookAsync(BookDTO bookDto);
-        Task<bool> DeleteBookAsync(int bookId);
+        Task<bool> AddBookAsync(BookDTO book);
+        Task<bool> UpdateBookAsync(BookDTO book);
+        Task<bool> DeleteBookAsync(int id);
     }
 }

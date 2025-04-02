@@ -22,7 +22,9 @@ public class BookService : IBookService
 
     public async Task<IEnumerable<BookDTO>> GetAllBooksAsync()
     {
-        return await _context.Books
+        try
+        {
+            return await _context.Books
             .Select(book => new BookDTO
             {
                 Id = book.Id,
@@ -33,25 +35,101 @@ public class BookService : IBookService
                 StockQuantity = book.StockQuantity
             })
             .ToListAsync();
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("Error fetching data", ex);
+        }
+        
     }
+    // Get book by ID
     public async Task<BookDTO> GetBookByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var book = await _context.Books.FindAsync(id);
+            if (book == null) return null;
+
+            return new BookDTO
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Author = book.Author,
+                ISBN = book.ISBN,
+                Price = book.Price,
+                StockQuantity = book.StockQuantity
+        };
+
+        }
+        catch(Exception ex) 
+        {
+            throw new Exception("Error fetching data", ex);
+        }
     }
 
-    public async Task<bool> AddBookAsync(BookDTO book)
+    // Add a new book
+    public async Task<bool> AddBookAsync(BookDTO bookDto)
     {
-        return await Task.FromResult(true); // Assume the book is successfully added
+        try
+        {
+            var book = new Book
+            {
+                Title = bookDto.Title,
+                Author = bookDto.Author,
+                ISBN = bookDto.ISBN,
+                Price = bookDto.Price,
+                StockQuantity = bookDto.StockQuantity
+            };
+
+            _context.Books.Add(book);
+            return await _context.SaveChangesAsync() > 0;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error fetching data", ex);
+        }
+        
     }
 
-    public async Task<bool> UpdateBookAsync(BookDTO book)
+    // Update an existing book
+    public async Task<bool> UpdateBookAsync(BookDTO bookDto)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var book = await _context.Books.FindAsync(bookDto.Id);
+            if (book == null) return false;
+
+            book.Title = bookDto.Title;
+            book.Author = bookDto.Author;
+            book.ISBN = bookDto.ISBN;
+            book.Price = bookDto.Price;
+            book.StockQuantity = bookDto.StockQuantity;
+
+            _context.Books.Update(book);
+            return await _context.SaveChangesAsync() > 0;
+        }
+        catch(Exception ex)
+        {
+            throw new Exception("Error fetching data", ex);
+        }
+        
     }
 
+    // Delete a book
     public async Task<bool> DeleteBookAsync(int id)
     {
-        throw new NotImplementedException(); // Implement actual logic here
+        try
+        {
+            var book = await _context.Books.FindAsync(id);
+            if (book == null) return false;
+
+            _context.Books.Remove(book);
+            return await _context.SaveChangesAsync() > 0;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error fetching data", ex);
+        }
     }
 }
 
