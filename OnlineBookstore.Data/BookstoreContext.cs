@@ -10,6 +10,7 @@ namespace OnlineBookstore.Data
 
         public DbSet<Book> Books { get; set; } // Add your DbSets
         public DbSet<User> Users { get; set; }
+        public DbSet<CartItems> Cart { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
