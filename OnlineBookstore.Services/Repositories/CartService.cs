@@ -1,4 +1,6 @@
-﻿using OnlineBookstore.Services.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineBookstore.Data;
+using OnlineBookstore.Services.DTOs;
 using OnlineBookstore.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ namespace OnlineBookstore.Services.Repositories
     public class CartService : ICartService
     {
         private readonly Dictionary<int, List<CartItemDTO>> _userCarts;
+        private readonly BookstoreContext _context;
 
         public CartService()
         {
@@ -17,8 +20,12 @@ namespace OnlineBookstore.Services.Repositories
 
         public async Task<CartDTO> GetCartByUserIdAsync(int userId)
         {
-            _userCarts.TryGetValue(userId, out var cartItems);
-            return await Task.FromResult(new CartDTO { UserId = userId, Items = cartItems ?? new List<CartItemDTO>() });
+            var cartItems = await _context.Cart
+                                          .Where(c => c.UserId == userId)
+                                          .Select(c => new CartItemDTO { BookId = c.BookId, Quantity = c.Quantity })
+                                          .ToListAsync();
+
+            return new CartDTO { UserId = userId, Items = cartItems };
         }
 
         public async Task<bool> AddToCartAsync(int userId, CartItemDTO cartItem) // Corrected method signature
