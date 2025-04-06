@@ -16,39 +16,18 @@ namespace OnlineBookstore.Services.Repositories
         private readonly IUserService _userRepository;
         private readonly IConfiguration _configuration;
 
-        public AuthenticationService(IUserService userRepository)  // ✅ Use IUserRepository
+        public AuthenticationService(IUserService userRepository, IConfiguration configuration)  // ✅ Use IUserRepository
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public async Task<UserDTO> AuthenticateAsync(string username, string password)
         {
-            // Ensure _userRepository is not null before using it
-            if (_userRepository == null)
-            {
-                throw new InvalidOperationException("UserRepository is not initialized");
-            }
-
             var user = await _userRepository.GetUserByCredentialsAsync(username, password);
-
-            if (user != null)
-            {
-                return new UserDTO { UserId = user.UserId, Username = user.Username };
-            }
-            return null;
-
-            //public async Task<UserDTO> AuthenticateAsync(string username, string password)
-            //{
-            //    // Assume we check the credentials from the database
-            //    var user = await _userRepository.GetUserByCredentialsAsync(username, password);
-
-            //    if (user != null)
-            //    {
-            //        // Return the user info (including user Id)
-            //        return new UserDTO { UserId = user.UserId, Username = user.Username };
-            //    }
-            //    return null;
+            return user;
         }
+
 
         //public AuthService(IConfiguration configuration)
         //{
@@ -82,6 +61,8 @@ namespace OnlineBookstore.Services.Repositories
         public async Task<string> GenerateJwtTokenAsync(UserDTO user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+
+
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -101,7 +82,10 @@ namespace OnlineBookstore.Services.Repositories
 
             return await Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
         }
-
+        public async Task<UserDTO> GetUserByCredentialsAsync(string username, string password)
+        {
+            return await AuthenticateAsync(username, password);
+        }
         public Task<bool> ValidateUserCredentialsAsync(string username, string password)
         {
             throw new NotImplementedException(); // TODO: Implement user validation logic

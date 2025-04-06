@@ -15,6 +15,7 @@ namespace OnlineBookstore.Web.Controllers
 
         public IActionResult Index()
         {
+           
             return View();
         }
 

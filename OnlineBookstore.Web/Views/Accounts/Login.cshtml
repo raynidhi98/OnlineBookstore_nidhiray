@@ -1,4 +1,4 @@
-﻿@model OnlineBookstore.Services.DTOs.UserDTO
+﻿@model OnlineBookstore.Services.DTOs.LoginDTO
 
 @{
     ViewData["Title"] = "Login";
@@ -9,14 +9,20 @@
 <form asp-action="Login" asp-controller="Accounts" method="post">
     <div class="mb-3">
         <label>Username</label>
-        <input asp-for="Username" class="form-control" required />
+        <input asp-for="Username" class="form-control" required autocomplete="username" />
         <span asp-validation-for="Username" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <label>Password</label>
+        <input asp-for="Password" type="password" class="form-control" required autocomplete="current-password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    @* <div class="mb-3">
+        <label>Password</label>
         <input asp-for="PasswordHash" type="password" class="form-control" required />
         <span asp-validation-for="PasswordHash" class="text-danger"></span>
-    </div>
+    </div> *@
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
 

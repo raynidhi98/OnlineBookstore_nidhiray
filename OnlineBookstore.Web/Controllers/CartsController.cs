@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OnlineBookstore.Web.Controllers
 {
-    [Authorize] 
+    [Authorize]
     public class CartsController : Controller
     {
         private readonly ICartService _cartService;
@@ -15,8 +15,7 @@ namespace OnlineBookstore.Web.Controllers
         {
             _cartService = cartService;
         }
-
-        [HttpGet("Index")]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userId = HttpContext.Session.GetInt32("UserId");
@@ -24,6 +23,7 @@ namespace OnlineBookstore.Web.Controllers
 
             var cart = await _cartService.GetCartByUserIdAsync(userId.Value);
             return View(cart);
+
         }
 
         [HttpPost]

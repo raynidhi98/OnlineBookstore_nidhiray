@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,7 @@ namespace OnlineBookstore.Services.DTOs
 
     public class CartItemDTO
     {
+        [Key]
         public int BookId { get; set; }
         public string Title { get; set; }
         public decimal Price { get; set; }

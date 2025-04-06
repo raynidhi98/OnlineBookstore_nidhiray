@@ -5,27 +5,66 @@
 
 <h2>Register</h2>
 
-<form asp-action="Register" method="post">
-    @* @Html.AntiForgeryToken() *@
+@* <form asp-action="Register" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" class="form-control" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FullName"></label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Role"></label>
+        <input asp-for="Role" class="form-control" />
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@
+
+ <form asp-action="Register" method="post">
     <div class="mb-3">
         <label>Username</label>
-        <input asp-for="Username" class="form-control" required />
+        <input asp-for="Username" class="form-control" required autocomplete="username" />
     </div>
     <div class="mb-3">
         <label>Email</label>
-        <input asp-for="Email" class="form-control" required />
+        <input asp-for="Email" class="form-control" required autocomplete="email" />
     </div>
     <div class="mb-3">
         <label>Password</label>
-        <input asp-for="PasswordHash" type="password" class="form-control" required />
+        <input asp-for="Password" type="password" class="form-control" required autocomplete="new-password" />
     </div>
     <div class="mb-3">
-        <label>Full Name</label>
-        <input asp-for="FullName" class="form-control" required />
+        <label>FullName</label>
+        <input asp-for="FullName" class="form-control" required autocomplete="full-name" />
     </div>
     <div class="mb-3">
-        <label>Role </label>
-        <input asp-for="Role" class="form-control" required />
+        <label>Role</label>
+        <input asp-for="Role" class="form-control" required autocomplete="role" />
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
-</form>
+</form> 
